@@ -1,0 +1,84 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { apartments } from "../data/site";
+
+const statusStyle: Record<string, string> = {
+  Ledig: "bg-accent text-bone",
+  Uthyrd: "bg-line text-stone",
+  Kö: "bg-ink/90 text-bone",
+};
+---
+
+<Layout
+  title="Lägenheter – Skatelövsvägen 44"
+  description="Åtta lägenheter på Skatelövsvägen 44 i Grimslöv. Storlekar från 1 rok till 3 rok."
+>
+  <section class="mx-auto max-w-6xl px-6 pt-20 pb-10">
+    <p class="text-xs uppercase tracking-[0.3em] text-stone">Lägenheter</p>
+    <h1 class="mt-3 font-serif text-4xl text-ink sm:text-5xl">
+      Åtta hem under samma tak
+    </h1>
+    <p class="mt-6 max-w-2xl text-stone leading-relaxed">
+      Här hittar du översikt över samtliga lägenheter på Skatelövsvägen 44.
+      Status uppdateras löpande — för mer detaljerad information, visning eller
+      köanmälan, hör av dig via kontaktsidan.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 pb-24">
+    <ul class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        apartments.map((apt) => (
+          <li class="group flex flex-col overflow-hidden rounded-lg border border-line bg-white/40 transition hover:bg-white">
+            <div class="aspect-[4/3] overflow-hidden bg-line">
+              <img
+                src={apt.image}
+                alt={apt.name}
+                loading="lazy"
+                class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <div class="flex items-center justify-between">
+                <h2 class="font-serif text-xl text-ink">{apt.name}</h2>
+                <span
+                  class:list={[
+                    "rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.18em]",
+                    statusStyle[apt.status],
+                  ]}
+                >
+                  {apt.status}
+                </span>
+              </div>
+              <p class="mt-3 text-sm text-stone">{apt.description}</p>
+              <dl class="mt-6 grid grid-cols-2 gap-y-2 gap-x-4 border-t border-line pt-5 text-sm">
+                <dt class="text-stone">Rum</dt>
+                <dd class="text-right text-ink">{apt.rooms}</dd>
+                <dt class="text-stone">Storlek</dt>
+                <dd class="text-right text-ink">{apt.size}</dd>
+                <dt class="text-stone">Plan</dt>
+                <dd class="text-right text-ink">{apt.floor}</dd>
+                <dt class="text-stone">Hyra</dt>
+                <dd class="text-right text-ink">{apt.rent}</dd>
+              </dl>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-16 rounded-lg border border-line bg-white/40 p-8 text-center sm:p-12">
+      <p class="text-xs uppercase tracking-[0.3em] text-stone">Intresserad?</p>
+      <h2 class="mt-3 font-serif text-2xl text-ink sm:text-3xl">
+        Hör av dig för visning eller köanmälan
+      </h2>
+      <a
+        href="/kontakt"
+        class="mt-6 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-bone transition hover:bg-ink"
+      >
+        Kontakta oss
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,31 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-line bg-bone">
+  <div class="mx-auto grid max-w-6xl gap-10 px-6 py-14 sm:grid-cols-3">
+    <div>
+      <p class="font-serif text-lg text-ink">Skatelövsvägen 44</p>
+      <p class="mt-2 text-sm text-stone">Bostäder i Grimslöv</p>
+    </div>
+    <div class="text-sm text-stone">
+      <p class="font-medium text-ink">Adress</p>
+      <p class="mt-2">Skatelövsvägen 44</p>
+      <p>340 32 Grimslöv</p>
+    </div>
+    <div class="text-sm text-stone">
+      <p class="font-medium text-ink">Kontakt</p>
+      <p class="mt-2">
+        <a class="hover:text-accent" href="/kontakt">Skicka meddelande</a>
+      </p>
+    </div>
+  </div>
+  <div class="border-t border-line">
+    <div
+      class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 text-xs text-stone"
+    >
+      <span>© {year} Skatelövsvägen 44</span>
+      <span class="uppercase tracking-[0.2em]">Grimslöv</span>
+    </div>
+  </div>
+</footer>
