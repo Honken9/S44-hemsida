@@ -6,8 +6,7 @@ export const site = {
   contactEmail: "hakfastigheter@gmail.com",
 };
 
-export const heroImage =
-  "https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=2400&q=80";
+export const heroImage = "/hero.jpg";
 
 export interface Apartment {
   id: string;
