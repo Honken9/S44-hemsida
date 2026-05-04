@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { apartments } from "../data/site";
+import { apartments, apartmentPlaceholderImage } from "../data/site";
 
 const statusStyle: Record<string, string> = {
   Ledig: "bg-accent text-bone",
@@ -11,7 +11,7 @@ const statusStyle: Record<string, string> = {
 
 <Layout
   title="Lägenheter – Skatelövsvägen 44"
-  description="Åtta lägenheter på Skatelövsvägen 44 i Grimslöv. Storlekar från 1 rok till 3 rok."
+  description="Åtta tvåor på Skatelövsvägen 44 i Grimslöv, fördelade på två plan."
 >
   <section class="mx-auto max-w-6xl px-6 pt-20 pb-10">
     <p class="text-xs uppercase tracking-[0.3em] text-stone">Lägenheter</p>
@@ -26,17 +26,47 @@ const statusStyle: Record<string, string> = {
   </section>
 
   <section class="mx-auto max-w-6xl px-6 pb-24">
+    <div
+      class="mb-10 flex items-start gap-3 rounded-md border border-line bg-white/60 p-4 text-sm text-stone sm:p-5"
+      role="note"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        class="mt-0.5 h-5 w-5 flex-none text-accent"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 8v4" stroke-linecap="round" />
+        <circle cx="12" cy="16" r="0.5" fill="currentColor" />
+      </svg>
+      <p>
+        <span class="font-medium text-ink">Bilderna är illustrativa</span> och
+        visar inte de specifika lägenheterna på Skatelövsvägen 44. Hör av dig
+        för aktuella foton, planlösning eller bokad visning.
+      </p>
+    </div>
+
     <ul class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {
         apartments.map((apt) => (
           <li class="group flex flex-col overflow-hidden rounded-lg border border-line bg-white/40 transition hover:bg-white">
-            <div class="aspect-[4/3] overflow-hidden bg-line">
+            <div class="relative aspect-[4/3] overflow-hidden bg-line">
               <img
-                src={apt.image}
-                alt={apt.name}
+                src={apt.image ?? apartmentPlaceholderImage}
+                alt={`Illustrativ bild för ${apt.name}`}
                 loading="lazy"
                 class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
               />
+              {
+                !apt.image && (
+                  <span class="absolute left-3 top-3 rounded-full bg-ink/80 px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] text-bone backdrop-blur-sm">
+                    Illustration
+                  </span>
+                )
+              }
             </div>
             <div class="flex flex-1 flex-col p-6">
               <div class="flex items-center justify-between">
@@ -50,16 +80,26 @@ const statusStyle: Record<string, string> = {
                   {apt.status}
                 </span>
               </div>
-              <p class="mt-3 text-sm text-stone">{apt.description}</p>
+              {apt.description && (
+                <p class="mt-3 text-sm text-stone">{apt.description}</p>
+              )}
               <dl class="mt-6 grid grid-cols-2 gap-y-2 gap-x-4 border-t border-line pt-5 text-sm">
                 <dt class="text-stone">Rum</dt>
                 <dd class="text-right text-ink">{apt.rooms}</dd>
-                <dt class="text-stone">Storlek</dt>
-                <dd class="text-right text-ink">{apt.size}</dd>
                 <dt class="text-stone">Plan</dt>
                 <dd class="text-right text-ink">{apt.floor}</dd>
-                <dt class="text-stone">Hyra</dt>
-                <dd class="text-right text-ink">{apt.rent}</dd>
+                {apt.size && (
+                  <>
+                    <dt class="text-stone">Storlek</dt>
+                    <dd class="text-right text-ink">{apt.size}</dd>
+                  </>
+                )}
+                {apt.rent && (
+                  <>
+                    <dt class="text-stone">Hyra</dt>
+                    <dd class="text-right text-ink">{apt.rent}</dd>
+                  </>
+                )}
               </dl>
             </div>
           </li>
