@@ -13,21 +13,21 @@ const statusStyle: Record<string, string> = {
   title="Lägenheter – Skatelövsvägen 44"
   description="Åtta tvåor på Skatelövsvägen 44 i Grimslöv, fördelade på två plan."
 >
-  <section class="mx-auto max-w-6xl px-6 pt-20 pb-10">
+  <section class="mx-auto max-w-6xl px-5 pt-14 pb-8 sm:px-6 sm:pt-20 sm:pb-10">
     <p class="text-xs uppercase tracking-[0.3em] text-stone">Lägenheter</p>
-    <h1 class="mt-3 font-serif text-4xl text-ink sm:text-5xl">
+    <h1 class="mt-3 font-serif text-3xl text-ink sm:text-5xl">
       Åtta hem under samma tak
     </h1>
-    <p class="mt-6 max-w-2xl text-stone leading-relaxed">
+    <p class="mt-5 max-w-2xl text-stone leading-relaxed sm:mt-6">
       Här hittar du översikt över samtliga lägenheter på Skatelövsvägen 44.
       Status uppdateras löpande — för mer detaljerad information, visning eller
       köanmälan, hör av dig via kontaktsidan.
     </p>
   </section>
 
-  <section class="mx-auto max-w-6xl px-6 pb-24">
+  <section class="mx-auto max-w-6xl px-5 pb-16 sm:px-6 sm:pb-24">
     <div
-      class="mb-10 flex items-start gap-3 rounded-md border border-line bg-white/60 p-4 text-sm text-stone sm:p-5"
+      class="mb-8 flex items-start gap-3 rounded-md border border-line bg-white/60 p-4 text-sm text-stone sm:mb-10 sm:p-5"
       role="note"
     >
       <svg
@@ -49,7 +49,7 @@ const statusStyle: Record<string, string> = {
       </p>
     </div>
 
-    <ul class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <ul class="grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
       {
         apartments.map((apt) => (
           <li class="group flex flex-col overflow-hidden rounded-lg border border-line bg-white/40 transition hover:bg-white">
@@ -107,9 +107,9 @@ const statusStyle: Record<string, string> = {
       }
     </ul>
 
-    <div class="mt-16 rounded-lg border border-line bg-white/40 p-8 text-center sm:p-12">
+    <div class="mt-12 rounded-lg border border-line bg-white/40 p-6 text-center sm:mt-16 sm:p-12">
       <p class="text-xs uppercase tracking-[0.3em] text-stone">Intresserad?</p>
-      <h2 class="mt-3 font-serif text-2xl text-ink sm:text-3xl">
+      <h2 class="mt-3 font-serif text-xl text-ink sm:text-3xl">
         Hör av dig för visning eller köanmälan
       </h2>
       <a

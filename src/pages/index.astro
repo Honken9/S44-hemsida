@@ -15,28 +15,28 @@ const ledigaCount = apartments.filter((a) => a.status === "Ledig").length;
       />
       <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-bone"></div>
     </div>
-    <div class="mx-auto max-w-6xl px-6 pt-32 pb-40 text-bone">
-      <p class="text-xs uppercase tracking-[0.3em] text-bone/80">
+    <div class="mx-auto max-w-6xl px-5 pt-24 pb-28 text-bone sm:px-6 sm:pt-32 sm:pb-40">
+      <p class="text-[11px] uppercase tracking-[0.3em] text-bone/80 sm:text-xs">
         Bostäder · Grimslöv
       </p>
-      <h1 class="mt-4 font-serif text-5xl leading-tight sm:text-7xl">
+      <h1 class="mt-4 font-serif text-4xl leading-tight sm:text-6xl lg:text-7xl">
         Skatelövsvägen 44
       </h1>
-      <p class="mt-6 max-w-xl text-lg text-bone/90">
+      <p class="mt-5 max-w-xl text-base text-bone/90 sm:mt-6 sm:text-lg">
         Åtta lägenheter i en lugn miljö några minuter från sjön Åsnen. En plats
         att kalla hemma — året runt.
       </p>
-      <div class="mt-10 flex flex-wrap gap-4">
+      <div class="mt-8 flex flex-wrap gap-3 sm:mt-10 sm:gap-4">
         <a
           href="/lagenheter"
-          class="inline-flex items-center gap-2 rounded-full bg-bone px-6 py-3 text-sm font-medium text-ink transition hover:bg-white"
+          class="inline-flex items-center gap-2 rounded-full bg-bone px-5 py-3 text-sm font-medium text-ink transition hover:bg-white sm:px-6"
         >
           Se lägenheterna
           <span aria-hidden="true">→</span>
         </a>
         <a
           href="/kontakt"
-          class="inline-flex items-center gap-2 rounded-full border border-bone/60 px-6 py-3 text-sm font-medium text-bone transition hover:bg-bone/10"
+          class="inline-flex items-center gap-2 rounded-full border border-bone/60 px-5 py-3 text-sm font-medium text-bone transition hover:bg-bone/10 sm:px-6"
         >
           Kontakta oss
         </a>
@@ -44,8 +44,8 @@ const ledigaCount = apartments.filter((a) => a.status === "Ledig").length;
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-6 py-24">
-    <div class="grid gap-12 sm:grid-cols-2">
+  <section class="mx-auto max-w-6xl px-5 py-16 sm:px-6 sm:py-24">
+    <div class="grid gap-8 sm:grid-cols-2 sm:gap-12">
       <div>
         <p class="text-xs uppercase tracking-[0.3em] text-stone">
           Om fastigheten
@@ -60,30 +60,43 @@ const ledigaCount = apartments.filter((a) => a.status === "Ledig").length;
           fördelade på två plan, alla lägenheter är tvåor. Här bor du nära
           skogen, sjön och vardagsservicen i samhället.
         </p>
-        <p class="mt-4">
-          Just nu finns
-          <span class="font-medium text-ink">{ledigaCount} lediga lägenheter</span>
-          — kontakta oss för mer information eller en visning.
-        </p>
+        {
+          ledigaCount > 0 ? (
+            <p class="mt-4">
+              Just nu finns
+              <span class="font-medium text-ink">
+                {ledigaCount === 1
+                  ? "1 ledig lägenhet"
+                  : `${ledigaCount} lediga lägenheter`}
+              </span>
+              — kontakta oss för mer information eller en visning.
+            </p>
+          ) : (
+            <p class="mt-4">
+              Just nu är samtliga lägenheter uthyrda. Hör gärna av dig om du
+              vill ställa dig i kö för framtida visningar.
+            </p>
+          )
+        }
       </div>
     </div>
 
-    <dl class="mt-16 grid grid-cols-2 gap-8 border-t border-line pt-10 sm:grid-cols-4">
+    <dl class="mt-12 grid grid-cols-2 gap-6 border-t border-line pt-8 sm:mt-16 sm:gap-8 sm:pt-10 sm:grid-cols-4">
       <div>
         <dt class="text-xs uppercase tracking-[0.2em] text-stone">Lägenheter</dt>
-        <dd class="mt-2 font-serif text-3xl text-ink">8</dd>
+        <dd class="mt-2 font-serif text-2xl text-ink sm:text-3xl">8</dd>
       </div>
       <div>
         <dt class="text-xs uppercase tracking-[0.2em] text-stone">Plan</dt>
-        <dd class="mt-2 font-serif text-3xl text-ink">2</dd>
+        <dd class="mt-2 font-serif text-2xl text-ink sm:text-3xl">2</dd>
       </div>
       <div>
         <dt class="text-xs uppercase tracking-[0.2em] text-stone">Storlek</dt>
-        <dd class="mt-2 font-serif text-3xl text-ink">2 rok</dd>
+        <dd class="mt-2 font-serif text-2xl text-ink sm:text-3xl">2 rok</dd>
       </div>
       <div>
         <dt class="text-xs uppercase tracking-[0.2em] text-stone">Ort</dt>
-        <dd class="mt-2 font-serif text-3xl text-ink">Grimslöv</dd>
+        <dd class="mt-2 font-serif text-2xl text-ink sm:text-3xl">Grimslöv</dd>
       </div>
     </dl>
   </section>

@@ -36,7 +36,7 @@ export const apartments: Apartment[] = [
     name: "Lägenhet 2",
     rooms: "2 rok",
     floor: "Bottenvåning",
-    status: "Ledig",
+    status: "Uthyrd",
   },
   {
     id: "3",
@@ -57,7 +57,7 @@ export const apartments: Apartment[] = [
     name: "Lägenhet 5",
     rooms: "2 rok",
     floor: "Övervåning",
-    status: "Ledig",
+    status: "Uthyrd",
   },
   {
     id: "6",

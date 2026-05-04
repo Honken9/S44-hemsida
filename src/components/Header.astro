@@ -12,9 +12,9 @@ const isActive = (href: string) =>
 ---
 
 <header class="border-b border-line bg-bone/80 backdrop-blur sticky top-0 z-30">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-    <a href="/" class="flex items-baseline gap-2 group">
-      <span class="font-serif text-xl tracking-tight text-ink group-hover:text-accent transition-colors">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-6 sm:py-5">
+    <a href="/" class="flex items-baseline gap-2 group min-w-0">
+      <span class="font-serif text-lg tracking-tight text-ink truncate group-hover:text-accent transition-colors sm:text-xl">
         Skatelövsvägen 44
       </span>
       <span class="hidden text-xs uppercase tracking-[0.2em] text-stone sm:inline">
@@ -22,7 +22,7 @@ const isActive = (href: string) =>
       </span>
     </a>
     <nav>
-      <ul class="flex items-center gap-7 text-sm">
+      <ul class="flex items-center gap-4 text-sm sm:gap-7">
         {
           links.map((link) => (
             <li>
