@@ -8,6 +8,45 @@ const TO_EMAIL = import.meta.env.CONTACT_TO_EMAIL ?? "hakfastigheter@gmail.com";
 const FROM_EMAIL =
   import.meta.env.CONTACT_FROM_EMAIL ?? "onboarding@resend.dev";
 
+// --- Inputbegränsningar (förhindrar abuse av jättepayloads) ---
+const MAX_NAME = 200;
+const MAX_EMAIL = 320; // RFC 5321 maxlängd
+const MAX_PHONE = 50;
+const MAX_MESSAGE = 5000;
+
+// --- Rate limit per IP (skydd mot enkel formulär-spam) ---
+// In-memory; nollställs vid serverless cold start. För enkel sajt räcker det.
+const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
+const RATE_LIMIT_MAX = 5;
+const rateBuckets = new Map<string, { count: number; resetAt: number }>();
+
+const rateLimitOk = (ip: string): boolean => {
+  const now = Date.now();
+  const bucket = rateBuckets.get(ip);
+  if (!bucket || bucket.resetAt < now) {
+    rateBuckets.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    // Periodisk städning av gamla buckets för att undvika minnesläcka
+    if (rateBuckets.size > 1000) {
+      for (const [k, v] of rateBuckets) {
+        if (v.resetAt < now) rateBuckets.delete(k);
+      }
+    }
+    return true;
+  }
+  if (bucket.count >= RATE_LIMIT_MAX) return false;
+  bucket.count++;
+  return true;
+};
+
+const getClientIp = (request: Request): string => {
+  const xff = request.headers.get("x-forwarded-for");
+  if (xff) return xff.split(",")[0].trim();
+  return request.headers.get("x-real-ip") ?? "unknown";
+};
+
+// CRLF kan användas till mejl-header-injection — avslå i alla single-line fält.
+const hasCrLf = (s: string) => /[\r\n]/.test(s);
+
 const escapeHtml = (s: string) =>
   s
     .replace(/&/g, "&amp;")
@@ -21,6 +60,18 @@ export const POST: APIRoute = async ({ request }) => {
     return Response.json(
       { ok: false, error: "Server saknar RESEND_API_KEY." },
       { status: 500 },
+    );
+  }
+
+  // Rate-limit innan vi gör något dyrt
+  const ip = getClientIp(request);
+  if (!rateLimitOk(ip)) {
+    return Response.json(
+      {
+        ok: false,
+        error: "För många inskick från din anslutning. Försök igen om en stund.",
+      },
+      { status: 429 },
     );
   }
 
@@ -53,6 +104,27 @@ export const POST: APIRoute = async ({ request }) => {
   if (!name || !email || !message) {
     return Response.json(
       { ok: false, error: "Namn, e-post och meddelande krävs." },
+      { status: 400 },
+    );
+  }
+
+  // Längdgräns
+  if (
+    name.length > MAX_NAME ||
+    email.length > MAX_EMAIL ||
+    phone.length > MAX_PHONE ||
+    message.length > MAX_MESSAGE
+  ) {
+    return Response.json(
+      { ok: false, error: "Ett av fälten är för långt." },
+      { status: 400 },
+    );
+  }
+
+  // CRLF-injektion (skydd för mejl-headers)
+  if (hasCrLf(name) || hasCrLf(email) || hasCrLf(phone)) {
+    return Response.json(
+      { ok: false, error: "Ogiltiga tecken i fälten." },
       { status: 400 },
     );
   }
